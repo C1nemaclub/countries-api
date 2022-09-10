@@ -2,16 +2,17 @@ import React from 'react';
 import styled from 'styled-components';
 
 export default function Card(props) {
-  console.log(props.data);
-
-  const cardElement = props.data.map((item, index) => {
+  function numberWithCommas(x) {
+    return x.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, '.');
+  }
+  const cardElements = props.data.map((item, index) => {
     return (
       <CardContent key={index}>
         <img src={item.flags.png} alt='country' />
         <div className='info'>
           <h3>{item.name.common}</h3>
           <h4>
-            Population: <span>{item.population}</span>
+            Population: <span>{numberWithCommas(item.population)}</span>
           </h4>
           <h4>
             Region: <span>{item.region}</span>
@@ -24,7 +25,7 @@ export default function Card(props) {
     );
   });
 
-  return cardElement;
+  return cardElements;
 }
 
 const CardContent = styled.div`
