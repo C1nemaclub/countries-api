@@ -3,8 +3,10 @@ import React, { useState, useEffect } from 'react';
 import Card from '../components/Card';
 import styled from 'styled-components';
 import { FaSistrix, FaMoon } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
 
 export default function Home() {
+  const navigate = useNavigate();
   const [contriesData, setCountriesData] = useState([]);
   const [searchInput, setSearchInput] = useState({
     country: '',
@@ -23,6 +25,12 @@ export default function Home() {
     getData();
   }, [searchInput.region]);
 
+  function viewCountry(country) {
+    navigate(`/country/${country.name.common}`, {
+      state: { country: country },
+    });
+  }
+
   function onChange(e) {
     const { name, value } = e.target;
     setSearchInput((prev) => {
@@ -38,13 +46,6 @@ export default function Home() {
   }
   return (
     <Page className='home-page'>
-      <div className='hero'>
-        <h2>Where in the world?</h2>
-        <button>
-          <FaMoon />
-          Dark Mode
-        </button>
-      </div>
       <div className='page-content'>
         <div className='form-container'>
           <form onSubmit={(e) => onSearch(e)}>
@@ -81,7 +82,7 @@ export default function Home() {
           </form>
         </div>
         <CardContainer>
-          <Card data={contriesData} />
+          <Card data={contriesData} handleClick={viewCountry} />
         </CardContainer>
       </div>
     </Page>
@@ -90,7 +91,7 @@ export default function Home() {
 
 const CardContainer = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
   place-items: center;
   gap: 3rem;
 `;
@@ -99,30 +100,6 @@ const Page = styled.div`
   .page-content {
     width: 90%;
     margin: auto;
-  }
-  .hero {
-    width: 100%;
-    height: 80px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 4rem;
-    background: hsl(209, 23%, 22%);
-    h2 {
-      color: hsl(0, 0%, 100%);
-      font-weight: 800;
-    }
-    button {
-      color: hsl(0, 0%, 100%);
-      background: transparent;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 10px;
-      font-size: 1rem;
-      font-weight: 600;
-      cursor: pointer;
-    }
   }
 
   .form-container {
@@ -138,10 +115,11 @@ const Page = styled.div`
         align-items: center;
         justify-content: flex-start;
         width: 35%;
-        background: hsl(209, 23%, 22%);
+        background: var(--color-background-dark);
         padding: 1rem 1rem;
         position: relative;
         border-radius: 5px;
+        box-shadow: 2px 2px 2px black;
       }
       .text-group {
         width: 100%;
@@ -177,8 +155,10 @@ const Page = styled.div`
         }
       }
       .region-group {
-        background: hsl(209, 23%, 22%);
+        background: var(--color-background-dark);
         padding: 1rem 1rem;
+        border-radius: 5px;
+        box-shadow: 2px 2px 2px black;
         select {
           border: 0px;
           background: none;
@@ -187,7 +167,7 @@ const Page = styled.div`
           outline: none;
           option {
             color: #fff;
-            background: hsl(209, 23%, 22%);
+            background: var(--color-background-dark);
           }
         }
       }

@@ -21,3 +21,8 @@ code {
   box-sizing: border-box;
   font-family: 'Nunito Sans', sans-serif;
 }
+
+:root {
+  --color-background-dark: hsl(209, 23%, 22%);
+  --color-text-dark: hsl(0, 0%, 100%);
+}
