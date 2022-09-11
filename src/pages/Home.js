@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import Card from '../components/Card';
 import styled from 'styled-components';
-import { FaSistrix, FaMoon } from 'react-icons/fa';
+import { FaSistrix } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 
 export default function Home() {
@@ -18,9 +18,13 @@ export default function Home() {
       const data = await axios.get('https://restcountries.com/v3.1/all');
 
       const filteredData = data.data.filter((country) => {
-        return country.region === searchInput.region;
+        if (searchInput.region === '' || searchInput.region === 'All') {
+          return country;
+        } else {
+          return country.region === searchInput.region;
+        }
       });
-      setCountriesData(data.data);
+      setCountriesData(filteredData);
     }
     getData();
   }, [searchInput.region]);
@@ -62,6 +66,7 @@ export default function Home() {
                   placeholder='Search for a country...'
                   value={searchInput.country}
                   onChange={(e) => onChange(e)}
+                  autocomplete='off'
                 />
               </div>
             </div>
@@ -72,6 +77,7 @@ export default function Home() {
                 value={searchInput.region}
                 onChange={(e) => onChange(e)}
               >
+                <option value='All'>Filter by Region</option>
                 <option value='Africa'>Africa</option>
                 <option value='Americas'>Americas</option>
                 <option value='Asia'>Asia</option>
@@ -82,7 +88,11 @@ export default function Home() {
           </form>
         </div>
         <CardContainer>
-          <Card data={contriesData} handleClick={viewCountry} />
+          <Card
+            data={contriesData}
+            handleClick={viewCountry}
+            search={searchInput}
+          />
         </CardContainer>
       </div>
     </Page>
@@ -139,7 +149,7 @@ const Page = styled.div`
           outline: none;
           color: white;
           border: 0px;
-          font-size: 1.2rem;
+          font-size: 1.1rem;
         }
         input::placeholder {
           color: #fff;
@@ -156,14 +166,16 @@ const Page = styled.div`
       }
       .region-group {
         background: var(--color-background-dark);
-        padding: 1rem 1rem;
+        padding: 1rem 2rem;
         border-radius: 5px;
         box-shadow: 2px 2px 2px black;
+        display: flex;
+        text-align: left;
         select {
           border: 0px;
           background: none;
           color: #fff;
-          font-size: 1.2rem;
+          font-size: 1.1rem;
           outline: none;
           option {
             color: #fff;
