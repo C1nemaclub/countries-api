@@ -49,7 +49,7 @@ export default function Home() {
     e.preventDefault();
   }
   return (
-    <Page className='home-page'>
+    <Page className='home-page page'>
       <div className='page-content'>
         <div className='form-container'>
           <form onSubmit={(e) => onSearch(e)}>
@@ -66,7 +66,7 @@ export default function Home() {
                   placeholder='Search for a country...'
                   value={searchInput.country}
                   onChange={(e) => onChange(e)}
-                  autocomplete='off'
+                  autoComplete='off'
                 />
               </div>
             </div>
@@ -180,6 +180,7 @@ const Page = styled.div`
           option {
             color: #fff;
             background: var(--color-background-dark);
+            text-align: left;
           }
         }
       }

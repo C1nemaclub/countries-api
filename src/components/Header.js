@@ -1,16 +1,30 @@
-import React from 'react';
-import { FaSistrix, FaMoon } from 'react-icons/fa';
+import React, { useContext } from 'react';
+import { FaMoon, FaSun } from 'react-icons/fa';
 import styled from 'styled-components';
+import { ThemeContext } from '../App';
+import { useNavigate } from 'react-router-dom';
 
 export default function Header() {
+  const navigate = useNavigate();
+  const theme = useContext(ThemeContext);
+  function changeTheme() {
+    theme.toggleTheme();
+  }
   return (
     <>
-      <HeaderBar>
-        <h2>Where in the world?</h2>
-        <button>
-          <FaMoon />
-          Dark Mode
-        </button>
+      <HeaderBar className='header'>
+        <h2 onClick={() => navigate('/countries-api')}>Where in the world?</h2>
+        {theme.theme === 'light' ? (
+          <button onClick={changeTheme}>
+            <FaMoon />
+            Dark Mode
+          </button>
+        ) : (
+          <button onClick={changeTheme}>
+            <FaSun />
+            Light Mode
+          </button>
+        )}
       </HeaderBar>
     </>
   );
@@ -28,6 +42,7 @@ const HeaderBar = styled.div`
   h2 {
     color: hsl(0, 0%, 100%);
     font-weight: 800;
+    cursor: pointer;
   }
   button {
     color: hsl(0, 0%, 100%);

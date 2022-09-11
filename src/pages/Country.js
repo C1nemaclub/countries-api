@@ -12,7 +12,6 @@ export default function Country() {
 
   const { state } = useLocation();
   const country = state.country;
-  console.log(country);
   const languages = Object.values(country.languages);
   const currencies = Object.values(country.currencies).map((item) => {
     return item.name;
@@ -20,9 +19,9 @@ export default function Country() {
 
   return (
     <Page>
-      <div className='page-content'>
-        <button onClick={() => navigate(-1)}>
-          <FaArrowLeft />
+      <div className='page-content page'>
+        <button onClick={() => navigate(-1)} className='icon-button'>
+          <FaArrowLeft className='icon' />
           Back
         </button>
         <div className='content'>

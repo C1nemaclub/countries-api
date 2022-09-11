@@ -18,10 +18,12 @@ export default function Card(props) {
       }
     })
     .map((item, index) => {
-      console.log(item);
-
       return (
-        <CardContent key={index} onClick={() => props.handleClick(item)}>
+        <CardContent
+          key={index}
+          onClick={() => props.handleClick(item)}
+          className='card'
+        >
           <img src={item.flags.png} alt='country' />
           <div className='info'>
             <h3>{item.name.common}</h3>
@@ -51,6 +53,7 @@ const CardContent = styled.div`
   cursor: pointer;
   border-radius: 5px;
   box-shadow: 1px 1px 10px 0px black;
+  animation: fadeIn 0.3s backwards;
   img {
     width: 100%;
     height: 180px;
